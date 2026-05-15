@@ -1,0 +1,12 @@
+langchain
+langgraph
+langchain-groq
+streamlit
+requests
+beautifulsoup4
+lxml
+python-dotenv
+langsmith
+
+redis
+psycopg2-binary
