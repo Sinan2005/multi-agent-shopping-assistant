@@ -1,4 +1,4 @@
-# 🛒 Agentic AI Shopping Assistant
+# 🛒 Multi-Agent AI Shopping Assistant
 
 ## Overview
 
