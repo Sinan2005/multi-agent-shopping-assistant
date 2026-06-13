@@ -1,78 +1,145 @@
-# 🛒 Multi-Agent AI Shopping Assistant
+Since you're asking for a **README.md**, I'll provide it as a reusable document you can directly place in your GitHub repository.
 
-## Overview
+# 🛒 Agentic AI Shopping Assistant
 
-The Agentic AI Shopping Assistant is an end-to-end multi-agent recommendation system that combines Large Language Models (LLMs), conversational memory, real-time product retrieval, deterministic ranking, and feedback-driven validation to deliver personalized shopping recommendations.
+## Building a Multi-Agent Personalized Shopping Recommendation System using LangGraph, LangChain, Groq LLM, Conversational Memory, Real-Time Product Retrieval, Deterministic Ranking, and Feedback-Driven Validation
 
-The system is built using LangGraph and follows an agentic workflow in which specialized agents collaborate to understand user requirements, remember shopping preferences, retrieve relevant products from Google Shopping, rank recommendations based on user constraints, validate recommendation quality, and generate natural-language explanations.
+---
 
-Unlike traditional recommendation systems that rely solely on collaborative filtering or static ranking algorithms, this project combines LLM reasoning with deterministic decision-making to create an explainable and context-aware shopping assistant.
+# Table of Contents
+
+1. Project Overview
+2. Motivation
+3. Problem Statement
+4. Key Features
+5. System Architecture
+6. Technology Stack
+7. Project Structure
+8. Agent Workflow
+9. LangGraph State Management
+10. Memory Architecture
+11. Planner Agent
+12. Memory Agent
+13. Researcher Agent
+14. Product Retrieval Layer
+15. Analyzer Agent
+16. Recommendation Scoring Engine
+17. Critic Agent
+18. Feedback Loop Mechanism
+19. LangGraph Workflow Construction
+20. Complete Example Execution
+21. Streamlit Frontend
+22. LangSmith Observability
+23. Challenges Faced
+24. Design Decisions
+25. Future Improvements
+26. Skills Demonstrated
+27. Conclusion
+
+---
+
+# Project Overview
+
+The Agentic AI Shopping Assistant is an end-to-end multi-agent recommendation system designed to deliver personalized shopping recommendations through natural language conversations.
+
+The system combines:
+
+* Large Language Models (LLMs)
+* Multi-Agent Architectures
+* Conversational Memory
+* Real-Time Product Retrieval
+* Deterministic Recommendation Ranking
+* Feedback-Based Validation
+
+to create a shopping assistant capable of understanding user preferences, maintaining context across multiple interactions, retrieving live product data, ranking products intelligently, and generating explainable recommendations.
+
+Unlike traditional chatbots that answer queries using a single prompt, this project decomposes the recommendation workflow into specialized agents that collaborate through a shared LangGraph state.
 
 ---
 
 # Motivation
 
-Modern LLMs can recommend products through natural conversation, but they often lack:
+Modern LLMs are capable of recommending products through natural language interactions.
 
-* Persistent user memory
-* Structured decision-making
-* Transparent recommendation logic
-* Constraint validation
-* Real-time product retrieval
+However, standalone LLMs suffer from several limitations:
 
-This project was designed to address these limitations by building an agentic architecture capable of:
+### No Long-Term Memory
 
+The model forgets user preferences after the conversation ends.
+
+### No Structured Decision Making
+
+Product recommendations are often based on probabilistic reasoning rather than explicit decision criteria.
+
+### No Real-Time Product Access
+
+Models cannot reliably retrieve up-to-date product information.
+
+### Lack of Explainability
+
+It is difficult to understand why a recommendation was selected.
+
+### No Validation Layer
+
+Recommendations may violate user constraints such as budget or preferred brands.
+
+---
+
+The objective of this project was to design a production-inspired AI system capable of solving these limitations through agent orchestration, memory management, retrieval augmentation, and deterministic ranking.
+
+---
+
+# Problem Statement
+
+Build an intelligent shopping assistant capable of:
+
+* Understanding shopping requirements
 * Remembering user preferences
-* Understanding follow-up queries
-* Retrieving live products
-* Applying deterministic ranking logic
-* Validating recommendations before presenting results
-
-The goal was not simply to build another chatbot, but to explore AI Engineering concepts such as:
-
-* Multi-Agent Systems
-* LangGraph Workflows
-* Conversational Memory
-* Retrieval-Augmented Applications
-* Explainable Recommendation Systems
-* State Management
-* Human-like Shopping Assistance
+* Retrieving products in real time
+* Ranking products according to constraints
+* Generating natural language explanations
+* Supporting follow-up conversations
+* Validating recommendation quality
 
 ---
 
 # Key Features
 
-### Multi-Agent Architecture
+## Multi-Agent Workflow
 
-The system is composed of specialized agents with distinct responsibilities.
+Specialized agents collaborate to complete the recommendation process.
 
-### Persistent Shopping Memory
+## Persistent User Memory
 
 User preferences are automatically extracted and stored.
 
-### Multi-Turn Conversations
+## Multi-Turn Conversations
 
-Users can refine recommendations without repeating preferences.
+Users can continue shopping conversations without repeating information.
 
-### Real-Time Product Retrieval
+## Real-Time Product Retrieval
 
-Products are retrieved from Google Shopping using SerpAPI.
+Products are retrieved directly from Google Shopping.
 
-### Deterministic Ranking
+## Deterministic Ranking
 
-Recommendations are selected using explicit scoring rules rather than purely relying on LLM output.
+Recommendations are selected using explicit scoring rules.
 
-### Recommendation Validation
+## Recommendation Validation
 
-A Critic Agent validates recommendations and triggers retries when constraints are violated.
+A Critic Agent validates recommendations before they are shown.
 
-### Explainable Recommendations
+## Explainable AI
 
-The system explains why a product was selected.
+The system explains why products were selected.
 
-### Interactive Frontend
+## Interactive Dashboard
 
-Built with Streamlit for easy interaction and visualization.
+Built using Streamlit.
+
+## LangSmith Monitoring
+
+Every agent execution is traceable.
 
 ---
 
@@ -104,8 +171,6 @@ Built with Streamlit for easy interaction and visualization.
                   Final Recommendation
 ```
 
-The workflow is orchestrated using LangGraph where each agent operates as a node in a stateful graph.
-
 ---
 
 # Technology Stack
@@ -121,16 +186,16 @@ The workflow is orchestrated using LangGraph where each agent operates as a node
 * Groq
 * Llama 3.3 70B Versatile
 
+## Frontend
+
+* Streamlit
+
 ## Retrieval Layer
 
 * SerpAPI
 * Google Shopping
 
-## Frontend
-
-* Streamlit
-
-## Backend
+## Programming Language
 
 * Python
 
@@ -139,25 +204,218 @@ The workflow is orchestrated using LangGraph where each agent operates as a node
 * Pandas
 * Requests
 * Dotenv
+* UUID
 * JSON
 * Regex
-* UUID
 
 ---
 
-# Workflow Walkthrough
-
-## Step 1: User Interaction
-
-The workflow begins when a user submits a shopping request.
-
-Example:
+# Project Structure
 
 ```text
-I need JBL wireless headphones under 100 dollars.
+shopping-assistant/
+│
+├── agents/
+│   ├── planner.py
+│   ├── memory.py
+│   ├── researcher.py
+│   ├── analyzer.py
+│   └── critic.py
+│
+├── tools/
+│   └── tools.py
+│
+├── graph.py
+├── state.py
+├── app.py
+├── llm_config.py
+├── store_factory.py
+├── requirements.txt
+│
+└── README.md
 ```
 
-The request enters the LangGraph workflow.
+---
+
+# Agent Workflow
+
+The system follows a sequential agentic workflow.
+
+```text
+Planner
+   ↓
+Memory
+   ↓
+Researcher
+   ↓
+Analyzer
+   ↓
+Critic
+```
+
+Each agent receives the current graph state, performs its task, updates the state, and passes control to the next agent.
+
+---
+
+# LangGraph State Management
+
+The entire workflow is driven through a shared state object.
+
+```python
+class AgentState(TypedDict, total=False):
+
+    user_input: str
+
+    session_context: str
+
+    products: List[dict]
+
+    analysis: str
+
+    next: str
+
+    top_products: List[dict]
+
+    comparison_table: List[dict]
+
+    memory_text_list: List[str]
+
+    retry_count: int
+```
+
+---
+
+# Why TypedDict?
+
+TypedDict provides a schema for the shared state.
+
+Benefits:
+
+* Type Safety
+* Easier Debugging
+* Better IDE Support
+* Consistent State Structure
+
+Every agent knows which fields can exist inside the workflow state.
+
+---
+
+# State Evolution Example
+
+Initial State
+
+```python
+{
+    "user_input":
+    "JBL wireless headphones under 100 dollars"
+}
+```
+
+After Planner
+
+```python
+{
+    "user_input":
+    "JBL wireless headphones under 100 dollars"
+}
+```
+
+After Researcher
+
+```python
+{
+    "user_input":
+    "...",
+
+    "products":
+    [...]
+}
+```
+
+After Analyzer
+
+```python
+{
+    "products":
+    [...],
+
+    "top_products":
+    [...],
+
+    "analysis":
+    "...",
+
+    "comparison_table":
+    [...]
+}
+```
+
+After Critic
+
+```python
+{
+    "next":
+    "__end__"
+}
+```
+
+LangGraph merges these updates into a single evolving state.
+
+---
+
+# Memory Architecture
+
+The project distinguishes between:
+
+## Workflow State
+
+Temporary information used during a single graph execution.
+
+Examples:
+
+* Products
+* Analysis
+* Retry Count
+
+---
+
+## Long-Term Memory
+
+Persistent user preferences stored across conversations.
+
+Examples:
+
+* Preferred Brand
+* Budget
+* Product Category
+
+---
+
+# Memory Storage Process
+
+User Input
+
+```text
+I prefer JBL wireless headphones under 100 dollars
+```
+
+Memory Agent extracts:
+
+```json
+{
+    "brand": "jbl",
+    "budget": "100",
+    "category": "wireless headphones"
+}
+```
+
+Stored as:
+
+```text
+prefers brand jbl
+budget 100
+category wireless headphones
+```
 
 ---
 
@@ -165,18 +423,11 @@ The request enters the LangGraph workflow.
 
 ## Purpose
 
-The Planner Agent acts as the workflow entry point.
+The Planner Agent is responsible for query refinement.
 
-Its objective is to convert user requests into cleaner and more structured shopping queries.
+It transforms natural language shopping requests into cleaner and more structured retrieval queries.
 
-## Responsibilities
-
-* Understand user intent
-* Remove ambiguity
-* Preserve user constraints
-* Generate search-ready queries
-
-## Example
+Example:
 
 Input:
 
@@ -190,70 +441,7 @@ Output:
 wireless headphones under 100 dollars
 ```
 
-This refined query is passed to downstream agents.
-
----
-
-# Memory Agent
-
-## Purpose
-
-The Memory Agent extracts structured shopping preferences from user interactions and stores them in a persistent memory store.
-
-## Extracted Preferences
-
-* Preferred Brand
-* Budget
-* Product Category
-
-## Example
-
-Input:
-
-```text
-I prefer JBL wireless headphones under 100 dollars.
-```
-
-Extracted JSON:
-
-```json
-{
-    "brand": "JBL",
-    "budget": "100",
-    "category": "wireless headphones"
-}
-```
-
-These preferences become available for future conversations.
-
----
-
-## Why Memory Matters
-
-Without memory:
-
-```text
-User:
-Show premium options.
-```
-
-The system lacks context.
-
-With memory:
-
-```text
-Brand = JBL
-Budget = 100
-Category = Wireless Headphones
-```
-
-The system understands:
-
-```text
-premium JBL wireless headphones under 100 dollars
-```
-
-This enables personalized multi-turn conversations.
+This reduces ambiguity before retrieval.
 
 ---
 
@@ -261,17 +449,17 @@ This enables personalized multi-turn conversations.
 
 ## Purpose
 
-The Researcher Agent is responsible for product discovery and retrieval.
+The Researcher Agent performs shopping query generation and product retrieval.
 
 It combines:
 
-* Current user query
-* Stored preferences
-* Conversation context
+* Current User Query
+* Stored Preferences
+* Conversation Context
 
-to create an optimized shopping search query.
+to generate an optimized search query.
 
-## Example
+Example:
 
 Stored Memory:
 
@@ -281,13 +469,13 @@ Budget: 100
 Category: Wireless Headphones
 ```
 
-User Query:
+Current Query:
 
 ```text
-Show me premium options.
+Show premium options
 ```
 
-Generated Search Query:
+Generated Query:
 
 ```text
 premium JBL wireless headphones under 100 dollars
@@ -295,36 +483,15 @@ premium JBL wireless headphones under 100 dollars
 
 ---
 
-# Real-Time Retrieval Layer
+# Product Retrieval Layer
 
-The generated query is sent to Google Shopping via SerpAPI.
+The generated query is sent to SerpAPI.
 
-## Why SerpAPI?
+SerpAPI acts as a bridge between the application and Google Shopping.
 
-Direct scraping is difficult and unreliable.
+The actual product data comes from Google Shopping.
 
-SerpAPI provides:
-
-* Structured JSON responses
-* Stable API interface
-* Google Shopping access
-* Product metadata extraction
-
----
-
-# Data Source
-
-The actual product data comes from:
-
-Google Shopping
-
-SerpAPI acts as a retrieval interface between the application and Google Shopping.
-
----
-
-# Retrieved Product Information
-
-Each product includes:
+Retrieved Product Information:
 
 ```python
 {
@@ -336,46 +503,42 @@ Each product includes:
 }
 ```
 
-These products are stored inside the graph state.
-
 ---
 
 # Analyzer Agent
 
 ## Purpose
 
-The Analyzer Agent performs recommendation ranking.
+The Analyzer Agent ranks products and selects the best recommendation.
 
-Rather than allowing the LLM to choose products directly, a deterministic scoring engine is used.
+Unlike many LLM applications, recommendation selection is not performed by the LLM.
 
-This improves:
+Instead, a deterministic ranking engine is used.
+
+Benefits:
 
 * Consistency
 * Explainability
 * Reliability
-* Evaluation
+* Easier Evaluation
 
 ---
 
-# Product Ranking Formula
+# Recommendation Scoring Engine
 
-The recommendation score is calculated using:
+Each product receives a score.
 
+Formula:
+
+Score =
 Brand Match
-
-*
-
++
 Category Match
-
-*
-
++
 Budget Match
-
-*
-
-2 × Product Rating
-
-*
++
+(2 × Rating)
+------------
 
 Missing Price Penalty
 
@@ -383,30 +546,16 @@ Missing Price Penalty
 
 ## Brand Match
 
-Rewards products matching the preferred brand.
+Rewards products matching preferred brands.
 
 Example:
 
 ```text
-Preferred Brand: JBL
-Product: JBL Tune 660NC
+Preferred Brand = JBL
+Product = JBL Tune 660NC
 ```
 
-Bonus score applied.
-
----
-
-## Category Match
-
-Rewards products matching the preferred category.
-
-Example:
-
-```text
-Category: Wireless Headphones
-```
-
-Products containing relevant category keywords receive additional points.
+Bonus points awarded.
 
 ---
 
@@ -421,54 +570,62 @@ Budget = 100
 Product Price = 95
 ```
 
-Results in a strong budget-fit score.
+Higher score.
 
 ---
 
 ## Rating Score
 
-Higher-rated products receive additional weight.
+Higher rated products receive additional weight.
 
 Example:
 
 ```text
-Rating = 4.7
+Rating = 4.8
 ```
 
-Contributes positively to the overall score.
+Contribution:
+
+```text
+2 × 4.8 = 9.6
+```
 
 ---
 
 # Recommendation Selection
 
-After scoring all retrieved products:
+Products are sorted by score.
 
-1. Products are sorted.
-2. Highest scoring product is selected.
-3. Top 3 products are preserved.
-4. Comparison table is generated.
+Highest scoring product becomes:
+
+```text
+Best Product
+```
+
+Top three products are retained for comparison.
 
 ---
 
 # Why Not Let The LLM Choose?
 
-The project intentionally separates:
+Deterministic Ranking:
 
-Recommendation Selection
+* Repeatable
+* Explainable
+* Debuggable
+* Evaluatable
 
-from
+Pure LLM Ranking:
 
-Recommendation Explanation
+* Non-Deterministic
+* Expensive
+* Difficult to Evaluate
 
-Benefits:
+Therefore:
 
-* Deterministic behavior
-* Easier debugging
-* Easier evaluation
-* Lower inference cost
-* Better reproducibility
+Analyzer chooses the winner.
 
-The LLM is used only to explain the recommendation.
+LLM explains the winner.
 
 ---
 
@@ -476,27 +633,22 @@ The LLM is used only to explain the recommendation.
 
 ## Purpose
 
-Acts as a quality assurance layer.
+Acts as a recommendation quality validator.
 
-The Critic verifies whether recommendations satisfy user constraints.
+The Critic verifies:
 
-## Validation Checks
+* Brand Constraints
+* Budget Constraints
 
-### Budget Constraint
-
-Checks whether retrieved products exceed the user's budget.
-
-### Brand Constraint
-
-Checks whether products satisfy preferred brand requirements.
+If violations are detected, retrieval is repeated.
 
 ---
 
 # Feedback Loop
 
-If violations are detected:
-
 ```text
+Researcher
+    ↓
 Analyzer
     ↓
 Critic
@@ -504,15 +656,19 @@ Critic
 Researcher
 ```
 
-The query is refined and retrieval is repeated.
-
-This creates a self-correcting workflow.
+This creates a self-correcting recommendation workflow.
 
 ---
 
 # Retry Protection
 
-A retry counter prevents infinite loops.
+To prevent infinite loops:
+
+```python
+retry_count
+```
+
+is maintained in the graph state.
 
 Maximum retries:
 
@@ -522,72 +678,122 @@ Maximum retries:
 
 ---
 
-# LangGraph State
+# LangGraph Workflow Construction
 
-The graph uses a shared state object.
+Graph Initialization:
 
 ```python
-{
-    "user_input": "",
-    "products": [],
-    "top_products": [],
-    "analysis": "",
-    "comparison_table": [],
-    "memory_text_list": [],
-    "retry_count": 0
-}
+builder = StateGraph(
+    AgentState
+)
 ```
 
-Each agent reads and updates portions of the state.
-
----
-
-# State Evolution Example
-
-Initial State:
+Node Registration:
 
 ```python
-{
-    "user_input":
-    "JBL headphones under 100 dollars"
-}
+builder.add_node(...)
 ```
 
-After Researcher:
+Edge Creation:
 
 ```python
-{
-    "products": [...]
-}
+builder.add_edge(...)
 ```
 
-After Analyzer:
+Entry Point:
 
 ```python
-{
-    "top_products": [...],
-    "analysis": "...",
-    "comparison_table": [...]
-}
+builder.set_entry_point(
+    "planner"
+)
 ```
 
-After Critic:
+Compilation:
 
 ```python
-{
-    "next": "__end__"
-}
+graph = builder.compile(
+    store=store
+)
+```
+
+Execution:
+
+```python
+graph.invoke(
+    state,
+    config=config
+)
 ```
 
 ---
 
-# Streamlit Interface
+# Complete Example Execution
 
-The frontend includes:
+User:
 
-### AI Recommendation Summary
+```text
+I want JBL wireless headphones under 100 dollars
+```
 
-Natural-language recommendation generated by the Analyzer.
+Planner:
+
+```text
+JBL wireless headphones under 100 dollars
+```
+
+Memory:
+
+```json
+{
+    "brand":"JBL",
+    "budget":"100",
+    "category":"wireless headphones"
+}
+```
+
+Researcher Query:
+
+```text
+JBL wireless headphones under 100 dollars
+```
+
+Retrieved Products:
+
+```text
+JBL Tune 660NC
+Sony WH-CH720N
+Anker Soundcore Q30
+```
+
+Analyzer Scores:
+
+```text
+JBL Tune 660NC     → 18.9
+Sony WH-CH720N     → 15.2
+Anker Q30          → 14.8
+```
+
+Critic:
+
+```text
+Validation Passed
+```
+
+Final Recommendation:
+
+```text
+JBL Tune 660NC
+```
+
+---
+
+# Streamlit Frontend
+
+The UI includes:
+
+### AI Recommendation Section
+
+Displays generated recommendation explanation.
 
 ### Product Comparison Table
 
@@ -595,7 +801,7 @@ Displays ranked products and scores.
 
 ### Product Cards
 
-Includes:
+Shows:
 
 * Product Image
 * Product Name
@@ -605,19 +811,11 @@ Includes:
 
 ### Chat History
 
-Maintains interaction history during the session.
+Stores previous interactions during the session.
 
 ---
 
 # LangSmith Observability
-
-LangSmith is used to monitor:
-
-* Agent Execution
-* Workflow Traces
-* Node-Level Performance
-* Debugging
-* Development Testing
 
 Every agent is instrumented using:
 
@@ -625,44 +823,55 @@ Every agent is instrumented using:
 @traceable
 ```
 
-allowing complete workflow visibility.
+This provides:
+
+* Workflow Traces
+* Agent Monitoring
+* Performance Analysis
+* Debugging Support
 
 ---
 
-# Future Enhancements
+# Challenges Faced
 
-Planned improvements include:
+* Designing memory extraction prompts
+* Handling follow-up shopping queries
+* Building deterministic ranking logic
+* Integrating real-time shopping retrieval
+* Managing shared graph state
+* Preventing infinite feedback loops
+* Maintaining recommendation consistency
 
-* Vector Database Integration
-* ChromaDB
+---
+
+# Future Improvements
+
+* ChromaDB Integration
+* Vector Search
 * Hybrid Retrieval
 * Product Embeddings
-* Semantic Search
-* Evaluation Dashboards
-* RAGAS Integration
+* RAG-Based Retrieval
 * User Authentication
 * PostgreSQL Memory Store
-* Multi-User Support
-* Cloud Deployment
 * Product Review Sentiment Analysis
+* Cloud Deployment
+* Multi-User Support
+* Recommendation Evaluation Dashboard
 
 ---
 
 # Skills Demonstrated
 
-This project showcases practical experience in:
-
 * Agentic AI
-* Multi-Agent Systems
 * LangGraph
 * LangChain
-* LLM Applications
-* Retrieval Systems
+* Multi-Agent Systems
 * Conversational Memory
 * State Management
 * Recommendation Systems
+* Retrieval-Augmented Applications
+* Tool Calling
 * Prompt Engineering
-* Tool Integration
 * Explainable AI
 * Streamlit Development
 * LangSmith Monitoring
@@ -671,4 +880,4 @@ This project showcases practical experience in:
 
 # Conclusion
 
-The Agentic AI Shopping Assistant demonstrates how modern AI systems can combine LLM reasoning, memory, retrieval, deterministic decision-making, and agent collaboration to create personalized and explainable recommendation experiences. The project serves as a practical exploration of AI Engineering principles and showcases the design of production-inspired agentic workflows using LangGraph and LangChain.
+The Agentic AI Shopping Assistant demonstrates how modern AI systems can combine LLM reasoning, long-term memory, real-time retrieval, deterministic decision-making, and multi-agent collaboration to create personalized recommendation experiences. The project showcases key AI Engineering concepts including LangGraph workflows, stateful agent orchestration, memory management, retrieval integration, recommendation ranking, validation loops, and observability, making it a strong demonstration of practical Agentic AI system design.
